@@ -1,6 +1,6 @@
 {
-  "name": "@leslie/stream-fetch-manage",
-  "version": "1.0.2",
+  "name": "@lesliechueng/stream-fetch-manage",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "type": "module",
