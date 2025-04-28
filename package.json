@@ -23,6 +23,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "homepage": "https://github.com/leslieCHUENGT/streamFetchManage",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leslieCHUENGT/streamFetchManage.git"
+  },
   "packageManager": "pnpm@10.9.0",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
