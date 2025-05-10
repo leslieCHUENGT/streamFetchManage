@@ -80,21 +80,4 @@ declare class StreamFetchClient {
     private clearTimer;
 }
 
-declare class TypeWriterManage {
-    private messageQueue;
-    private delay;
-    private onMessage;
-    private onFinish;
-    private isProcessing;
-    private stopFlag;
-    private timeoutId;
-    constructor(delay: number, onMessage: (char: string) => void, onFinish: () => void, initialValue?: string);
-    add(chunk: string): void;
-    setOnComplete(callback: () => void): void;
-    start(): void;
-    processQueue(): void;
-    stop(): void;
-    immediatelyStop(): void;
-}
-
-export { CacheManager, MessageProcessor, StreamFetchClient, TypeWriterManage };
+export { CacheManager, MessageProcessor, StreamFetchClient };
