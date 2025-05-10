@@ -15,7 +15,7 @@
 使用示例：
 
 ```ts
-import { StreamFetchClient } from "./index";
+import { StreamFetchClient } from '@lesliechueng/stream-fetch-manage'
 
 const streamFetchApp = new StreamFetchClient(
   {
@@ -46,14 +46,20 @@ const streamFetchApp = new StreamFetchClient(
     },
   }
 );
+// 开始发起请求，下面是具体的参数
+streamFetchApp.sendStreamRequest({
+  // 流式中间请求参数
+});
 
 // 暂停请求
-streamFetchApp.disconnect();
+// streamFetchApp.disconnect();
 ```
 
-- 解决网络抖动问题：通过在请求中设置缓存时间和 data个数。
+*   解决网络抖动问题：通过在请求中设置缓存时间和 data个数。
 
 ```ts
+import { StreamFetchClient } from '@lesliechueng/stream-fetch-manage'
+
 const streamFetchApp1 = new StreamFetchClient(
   {
     baseUrl: "",
@@ -97,7 +103,7 @@ const streamFetchApp1 = new StreamFetchClient(
   }
 );
 
+// 开始发起请求，下面是具体的参数
 streamFetchApp1.sendStreamRequest({
   // 流式中间请求参数
 });
-```
