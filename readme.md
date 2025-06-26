@@ -55,7 +55,7 @@ streamFetchApp.sendStreamRequest({
 // streamFetchApp.disconnect();
 ```
 
-*   解决网络抖动问题：通过在请求中设置缓存时间和 data个数。
+*   解决可能因为服务端问题导致数据包序号抖动：通过在请求中设置缓存时间和 data个数。
 
 ```ts
 import { StreamFetchClient } from '@lesliechueng/stream-fetch-manage'
