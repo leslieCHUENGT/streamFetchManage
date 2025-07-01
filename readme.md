@@ -3,13 +3,118 @@
 - [English](#english)
 - [中文](#中文)
 
----
-
 ### English
 
-// Your English content here
+Due to the requirement of making POST requests without an XMLHttpRequest-based library, I opted for the **@microsoft/fetch-event-source** library, an open-source solution by Microsoft that wraps the `fetch` API. On top of this, I've created a secondary encapsulation to enhance request controllability and robustness in error handling. The specific encapsulation features are as follows:
 
----
+1. **Request Cancellation Mechanism**: Implemented active cancellation of requests to ensure timely interruption when necessary, preventing unnecessary resource consumption.
+
+2. **Error Capture and Handling**: Unified capture and handling of various errors, covering the following scenarios:
+   - **Network Errors**: Capture and handle issues when network connectivity is abnormal or requests cannot be sent.
+   - **Server Errors**: Handle HTTP 5xx or 4xx status codes returned by the server.
+   - **Connection Errors**: Capture errors when network connections are interrupted or requests time out.
+   - **Streaming Interface Timeout Errors**: Detect and handle timeouts during streaming data requests.
+   - **JSON Parsing Errors**: Manage exceptions that occur during JSON parsing of response data.
+
+These enhancements significantly improve request reliability and stability, ensuring effective error handling and recovery under various exceptional conditions.
+
+**Usage Example:**
+
+```ts
+import { StreamFetchClient } from '@lesliechueng/stream-fetch-manage'
+
+const streamFetchApp = new StreamFetchClient(
+  {
+    baseUrl: "",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    overErrorTimer: 60 * 1000, // Streaming intermediate timeout in milliseconds
+  },
+  {
+    onMessage: (_data) => {
+      // Process streaming messages
+    },
+    onClose: (_lastData: any) => {
+      // Callback for connection closure
+    },
+    onServerError: (_lastData: any) => {
+      // Callback for server errors
+    },
+    onStreamConnectionError: (_lastData: any) => {
+      // Callback for streaming timeout errors
+    },
+    onConnectionError: (_lastData: any) => {
+      // Callback for connection errors
+    },
+    onParseError: (_lastData: any) => {
+      // Callback for JSON parsing errors
+    },
+  }
+);
+
+// Initiate the request with specific parameters
+streamFetchApp.sendStreamRequest({
+  // Streaming request parameters
+});
+
+// Pause the request
+// streamFetchApp.disconnect();
+```
+
+* **Addressing Packet Sequence Jitter Caused by Server Issues**: Implemented caching time and data count limits in requests.
+
+```ts
+import { StreamFetchClient } from '@lesliechueng/stream-fetch-manage'
+
+const streamFetchApp1 = new StreamFetchClient(
+  {
+    baseUrl: "",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    overErrorTimer: 60 * 1000, // Streaming intermediate timeout in milliseconds
+  },
+  {
+    onMessage: (_data) => {
+      // Process messages with a handler
+      console.log(_data);
+    },
+    onClose: () => {
+      // Callback for connection closure
+    },
+    onServerError: () => {
+      // Callback for server errors
+    },
+    onStreamConnectionError: () => {
+      // Callback for streaming timeout errors
+    },
+    onConnectionError: () => {
+      // Callback for connection errors
+    },
+    onParseError: () => {
+      // Callback for JSON parsing errors
+    },
+  },
+  {
+    maxCacheSize: 6, // Maximum cache size (number of entries)
+    cacheTimeout: 5000, // Cache timeout in milliseconds
+    expectedSeq: 0, // Expected message sequence number
+    handleValidateMessageFormat: (data: any) => {
+      // Validate message format
+      if (typeof data.seq !== "number") {
+        throw new Error("Message must have a numeric seq field");
+      }
+    },
+    getIndexValue: (data: any) => data.seq, // Retrieve message sequence number
+  }
+);
+
+// Initiate the request with specific parameters
+streamFetchApp1.sendStreamRequest({
+  // Streaming request parameters
+});
+```
 
 ### 中文
 
