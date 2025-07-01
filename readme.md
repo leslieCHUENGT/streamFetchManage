@@ -1,3 +1,18 @@
+## Language
+
+- [English](#english)
+- [中文](#中文)
+
+---
+
+### English
+
+// Your English content here
+
+---
+
+### 中文
+
 由于需要进行post请求，而没有基于XMLHttpRequest封装的类库，于是使用基于fetch封装的类库，微软开源的 **@microsoft/fetch-event-source**请求库，该库基于`fetch`进行了封装。在此基础上，我对其进行了二次封装，主要目的是增强请求的可控性，并提升错误处理的健壮性。具体封装功能如下：
 
 1.  **请求取消机制**：实现了对请求的主动取消功能，确保在需要时能够及时中断请求，避免不必要的资源消耗。
